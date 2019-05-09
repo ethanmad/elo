@@ -6,11 +6,46 @@ import (
 )
 
 func TestPlay(t *testing.T) {
-	m := &Match{&Player{rating: 1000}, &Player{rating: 1000}, false}
-	m.Play()
-	if m.w.rating != 1016 && m.l.rating != 984 {
-		t.Errorf("expecting winner rating 1016, got %d", m.w.rating)
+	for _, d := range providePlay() {
+		d.m.Play()
+		if d.m.w.rating != d.final.w.rating {
+			t.Errorf("expecting winner rating %d, got %d", d.final.w.rating, d.m.w.rating)
+		}
+		if d.m.l.rating != d.final.l.rating {
+			t.Errorf("expecting loser rating %d, got %d", d.final.w.rating, d.m.w.rating)
+		}
+		if d.m.draw != d.final.draw {
+			t.Errorf("expecting draw %t, got %t", d.final.draw, d.m.draw)
+		}
+
 	}
+}
+
+type dataPlay struct {
+	m     Match
+	final Match
+}
+
+func providePlay() []dataPlay {
+	data := []dataPlay{
+		{ // Win with same ratings
+			Match{&Player{rating: 1000}, &Player{rating: 1000}, false},
+			Match{&Player{rating: 1016}, &Player{rating: 984}, false},
+		},
+		{ // Draw with same ratings
+			Match{&Player{rating: 1000}, &Player{rating: 1000}, true},
+			Match{&Player{rating: 1000}, &Player{rating: 1000}, true},
+		},
+		{ // Win with different ratings
+			Match{&Player{rating: 1100}, &Player{rating: 1000}, false},
+			Match{&Player{rating: 1112}, &Player{rating: 988}, false},
+		},
+		{ // Draw with w=higher rating
+			Match{&Player{rating: 1400}, &Player{rating: 1100}, true},
+			Match{&Player{rating: 1389}, &Player{rating: 1111}, true},
+		},
+	}
+	return data
 }
 
 func TestExpectedScore(t *testing.T) {

@@ -28,8 +28,14 @@ type Match struct {
 // Play updates the player's ratings based on the match results.
 func (m *Match) Play() {
 	d := int(m.delta())
-	m.w.rating += d
-	m.l.rating -= d
+	// In the event of a draw, the lower rating should increase and the higher rating should decrease.
+	if m.draw && m.w.rating > m.l.rating {
+		m.w.rating -= d
+		m.l.rating += d
+	} else {
+		m.w.rating += d
+		m.l.rating -= d
+	}
 }
 
 // ExpectedScore returns the expected score of the Player corresponding to ratingA.
