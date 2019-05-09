@@ -8,14 +8,14 @@ import (
 func TestPlay(t *testing.T) {
 	for _, d := range providePlay() {
 		d.m.Play()
-		if d.m.w.rating != d.final.w.rating {
-			t.Errorf("expecting winner rating %d, got %d", d.final.w.rating, d.m.w.rating)
+		if d.m.W.Rating != d.final.W.Rating {
+			t.Errorf("expecting winner rating %d, got %d", d.final.W.Rating, d.m.W.Rating)
 		}
-		if d.m.l.rating != d.final.l.rating {
-			t.Errorf("expecting loser rating %d, got %d", d.final.w.rating, d.m.w.rating)
+		if d.m.L.Rating != d.final.L.Rating {
+			t.Errorf("expecting loser rating %d, got %d", d.final.W.Rating, d.m.W.Rating)
 		}
-		if d.m.draw != d.final.draw {
-			t.Errorf("expecting draw %t, got %t", d.final.draw, d.m.draw)
+		if d.m.Draw != d.final.Draw {
+			t.Errorf("expecting draw %t, got %t", d.final.Draw, d.m.Draw)
 		}
 
 	}
@@ -29,20 +29,20 @@ type dataPlay struct {
 func providePlay() []dataPlay {
 	data := []dataPlay{
 		{ // Win with same ratings
-			Match{&Player{rating: 1000}, &Player{rating: 1000}, false},
-			Match{&Player{rating: 1016}, &Player{rating: 984}, false},
+			Match{&Player{Rating: 1000}, &Player{Rating: 1000}, false},
+			Match{&Player{Rating: 1016}, &Player{Rating: 984}, false},
 		},
 		{ // Draw with same ratings
-			Match{&Player{rating: 1000}, &Player{rating: 1000}, true},
-			Match{&Player{rating: 1000}, &Player{rating: 1000}, true},
+			Match{&Player{Rating: 1000}, &Player{Rating: 1000}, true},
+			Match{&Player{Rating: 1000}, &Player{Rating: 1000}, true},
 		},
 		{ // Win with different ratings
-			Match{&Player{rating: 1100}, &Player{rating: 1000}, false},
-			Match{&Player{rating: 1112}, &Player{rating: 988}, false},
+			Match{&Player{Rating: 1100}, &Player{Rating: 1000}, false},
+			Match{&Player{Rating: 1112}, &Player{Rating: 988}, false},
 		},
 		{ // Draw with w=higher rating
-			Match{&Player{rating: 1400}, &Player{rating: 1100}, true},
-			Match{&Player{rating: 1389}, &Player{rating: 1111}, true},
+			Match{&Player{Rating: 1400}, &Player{Rating: 1100}, true},
+			Match{&Player{Rating: 1389}, &Player{Rating: 1111}, true},
 		},
 	}
 	return data
@@ -102,27 +102,27 @@ type dataDelta struct {
 func provideDelta() []dataDelta {
 	data := []dataDelta{
 		{
-			Match{&Player{rating: 1000}, &Player{rating: 1000}, false},
+			Match{&Player{Rating: 1000}, &Player{Rating: 1000}, false},
 			16,
 		},
 		{
-			Match{&Player{rating: 1000}, &Player{rating: 1000}, true},
+			Match{&Player{Rating: 1000}, &Player{Rating: 1000}, true},
 			0,
 		},
 		{
-			Match{&Player{rating: 1100}, &Player{rating: 1000}, false},
+			Match{&Player{Rating: 1100}, &Player{Rating: 1000}, false},
 			12,
 		},
 		{
-			Match{&Player{rating: 1000}, &Player{rating: 1100}, false},
+			Match{&Player{Rating: 1000}, &Player{Rating: 1100}, false},
 			20,
 		},
 		{
-			Match{&Player{rating: 1100}, &Player{rating: 1400}, false},
+			Match{&Player{Rating: 1100}, &Player{Rating: 1400}, false},
 			27,
 		},
 		{
-			Match{&Player{rating: 1400}, &Player{rating: 1100}, false},
+			Match{&Player{Rating: 1400}, &Player{Rating: 1100}, false},
 			5,
 		},
 	}

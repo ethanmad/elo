@@ -15,26 +15,26 @@ const (
 // Player contains the Player's rating.
 // Using a struct to support the future addition of other information.
 type Player struct {
-	rating int
+	Rating int
 }
 
 // Match contains two *Players: w is the winner, l is the loser.
 // If draw is set, the order of *Players doesn't matter.
 type Match struct {
-	w, l *Player
-	draw bool
+	W, L *Player
+	Draw bool
 }
 
 // Play updates the ratings based on the match results by modifying the Players referenced by m.
 func (m *Match) Play() {
 	d := int(m.delta())
 	// In the event of a draw, the lower rating should increase and the higher rating should decrease.
-	if m.draw && m.w.rating > m.l.rating {
-		m.w.rating -= d
-		m.l.rating += d
+	if m.Draw && m.W.Rating > m.L.Rating {
+		m.W.Rating -= d
+		m.L.Rating += d
 	} else {
-		m.w.rating += d
-		m.l.rating -= d
+		m.W.Rating += d
+		m.L.Rating -= d
 	}
 }
 
@@ -51,8 +51,8 @@ func ExpectedScore(ratingA, ratingB int) float64 {
 // i.e., the winner's rating is added to and the loser's rating is subtracted from.
 // Equation: Δ = k * (score - expected).
 func (m *Match) delta() uint {
-	d := -ExpectedScore(m.w.rating, m.l.rating)
-	if m.draw {
+	d := -ExpectedScore(m.W.Rating, m.L.Rating)
+	if m.Draw {
 		d += drawScore
 	} else {
 		d += winScore
