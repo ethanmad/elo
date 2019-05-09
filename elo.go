@@ -25,8 +25,8 @@ type Match struct {
 	draw bool
 }
 
-// Updates the player's ratings
-func (m *Match) play() {
+// Play updates the player's ratings based on the match results.
+func (m *Match) Play() {
 	d := int(m.delta())
 	m.w.rating += d
 	m.l.rating -= d
