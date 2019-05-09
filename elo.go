@@ -51,12 +51,11 @@ func ExpectedScore(ratingA, ratingB int) float64 {
 // i.e., the winner's rating is added to and the loser's rating is subtracted from.
 // Equation: Δ = k * (score - expected).
 func (m *Match) delta() uint {
-	expec := ExpectedScore(m.w.rating, m.l.rating)
-	d := 0.0
+	d := -ExpectedScore(m.w.rating, m.l.rating)
 	if m.draw {
-		d = drawScore - expec
+		d += drawScore
 	} else {
-		d = winScore - expec
+		d += winScore
 	}
 	d *= float64(k)
 	return uint(math.Abs(math.Round(d)))
